@@ -1,0 +1,128 @@
+--pregunta 1
+
+Select sender_user_id, currency_name, nombre from transacción
+inner join moneda
+on transacción.moneda_currency_id = moneda.currency_id
+inner join usuario
+on usuario.user_id = transacción.sender_user_id;
+
+-- pregunta 2
+
+SELECT * FROM `alke wallet`.transacción;
+
+-- pregunta 3
+
+SELECT * FROM `alke wallet`.transacción
+where sender_user_id = "123";
+
+-- pregunta 4
+
+UPDATE `alke wallet`.`usuario` SET `correo_electronico` = 'dead.isaac96@gmail.com' WHERE (`user_id` = '123');
+
+-- pregunta 5
+
+DELETE FROM `alke wallet`.`moneda` WHERE (`currency_id` = '1234');
+DELETE FROM `alke wallet`.`moneda` WHERE (`currency_id` = '123');
+
+-- inserto datos.
+
+INSERT INTO `alke wallet`.`transacción` (`transaccion_id`, `sender_user_id`, `reciever_user_id`, `importe`, `transaccion_date`, `moneda_currency_id`) VALUES ('123', '123', '1234', '200', '1996-10-27', '123');
+INSERT INTO `alke wallet`.`transacción` (`transaccion_id`, `sender_user_id`, `reciever_user_id`, `importe`, `transaccion_date`, `moneda_currency_id`) VALUES ('124', '1235', '1236', '2000', '2024-03-25', '1234');
+INSERT INTO `alke wallet`.`transacción` (`transaccion_id`, `sender_user_id`, `reciever_user_id`, `importe`, `transaccion_date`, `moneda_currency_id`) VALUES ('125', '1236', '1237', '500', '2023-03-25', '123');
+INSERT INTO `alke wallet`.`transacción` (`transaccion_id`, `sender_user_id`, `reciever_user_id`, `importe`, `transaccion_date`, `moneda_currency_id`) VALUES ('126', '1237', '1238', '3333', '2024-03-24', '1234');
+INSERT INTO `alke wallet`.`transacción` (`transaccion_id`, `sender_user_id`, `reciever_user_id`, `importe`, `transaccion_date`, `moneda_currency_id`) VALUES ('127', '1238', '1239', '4000', '2024-03-20', '123');
+
+INSERT INTO `alke wallet`.`moneda` (`currency_id`, `currency_name`, `currency_symbol`) VALUES ('133', 'CLP', '$$');
+INSERT INTO `alke wallet`.`moneda` (`currency_id`, `currency_name`, `currency_symbol`) VALUES ('122', 'Ethereum', '#');
+
+
+INSERT INTO `alke wallet`.`usuario` (`user_id`, `nombre`, `correo_electronico`, `contrasena`, `saldo`) VALUES ('123', 'alvaro', 'alvaro.issac@gmail.com', '123', '2000');
+INSERT INTO `alke wallet`.`usuario` (`user_id`, `nombre`, `correo_electronico`, `contrasena`, `saldo`) VALUES ('1234', 'Juan', 'alvaro.aybar@mail.udp.cl', '232', '2222');
+INSERT INTO `alke wallet`.`usuario` (`user_id`, `nombre`, `correo_electronico`, `contrasena`, `saldo`) VALUES ('1235', 'Isaac', 'isac@gmail.com', '133', '5000');
+INSERT INTO `alke wallet`.`usuario` (`user_id`, `nombre`, `correo_electronico`, `contrasena`, `saldo`) VALUES ('1236', 'Camila', 'camila@gmail.com', '132', '6000');
+INSERT INTO `alke wallet`.`usuario` (`user_id`, `nombre`, `correo_electronico`, `contrasena`, `saldo`) VALUES ('1237', 'Mauren', 'mauren@gmail.com', '111', '7000');
+INSERT INTO `alke wallet`.`usuario` (`user_id`, `nombre`, `correo_electronico`, `contrasena`, `saldo`) VALUES ('1238', 'Hugo', 'hugo@gmail.com', '122', '8000');
+INSERT INTO `alke wallet`.`usuario` (`user_id`, `nombre`, `correo_electronico`, `contrasena`, `saldo`) VALUES ('1239', 'Dafne', 'dafne@gmail.com', '155', '9000');
+INSERT INTO `alke wallet`.`usuario` (`user_id`, `nombre`, `correo_electronico`, `contrasena`, `saldo`) VALUES ('1240', 'Andrea', 'andrea@gmail.com', '166', '9999');
+INSERT INTO `alke wallet`.`usuario` (`user_id`, `nombre`, `correo_electronico`, `contrasena`, `saldo`) VALUES ('1241', 'Edgar', 'edgar@gmail.com', '165', '100');
+INSERT INTO `alke wallet`.`usuario` (`user_id`, `nombre`, `correo_electronico`, `contrasena`, `saldo`) VALUES ('1242', 'Grace', 'grace@gmail.com', '177', '1');
+
+
+
+--creacion de tablas
+
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema Alke Wallet
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema Alke Wallet
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `Alke Wallet` DEFAULT CHARACTER SET utf8 ;
+USE `Alke Wallet` ;
+
+-- -----------------------------------------------------
+-- Table `Alke Wallet`.`Usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Alke Wallet`.`Usuario` (
+  `user_id` INT NOT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
+  `correo_electronico` VARCHAR(45) NOT NULL,
+  `contrasena` VARCHAR(45) NOT NULL,
+  `saldo` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`user_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Alke Wallet`.`Moneda`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Alke Wallet`.`Moneda` (
+  `currency_id` INT NOT NULL,
+  `currency_name` VARCHAR(45) NOT NULL,
+  `currency_symbol` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`currency_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Alke Wallet`.`Transacción`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Alke Wallet`.`Transacción` (
+  `transaccion_id` INT NOT NULL,
+  `sender_user_id` INT NOT NULL,
+  `reciever_user_id` INT NOT NULL,
+  `importe` VARCHAR(45) NULL,
+  `transaccion_date` DATE NULL,
+  `moneda_currency_id` INT NOT NULL,
+  PRIMARY KEY (`transaccion_id`),
+  INDEX `fk_Transacción_Usuario_idx` (`sender_user_id` ASC) VISIBLE,
+  INDEX `fk_Transacción_Usuario1_idx` (`reciever_user_id` ASC) VISIBLE,
+  INDEX `fk_Transacción_Moneda1_idx` (`moneda_currency_id` ASC) VISIBLE,
+  CONSTRAINT `fk_Transacción_Usuario`
+    FOREIGN KEY (`sender_user_id`)
+    REFERENCES `Alke Wallet`.`Usuario` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Transacción_Usuario1`
+    FOREIGN KEY (`reciever_user_id`)
+    REFERENCES `Alke Wallet`.`Usuario` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Transacción_Moneda1`
+    FOREIGN KEY (`moneda_currency_id`)
+    REFERENCES `Alke Wallet`.`Moneda` (`currency_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
